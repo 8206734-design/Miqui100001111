@@ -126,14 +126,14 @@
             border: none;
             border-radius: 50%;
             color: white;
-            font-size: 20px;
+            font-size: 50px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 20px;
             transition: all 0.3s ease;
-            width: 50px;
+            width: 70px;
             height: 50px;
             box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
         }
@@ -149,7 +149,7 @@
             font-size: 16px;
             color: rgba(255, 255, 255, 0.95);
             min-width: 40px;
-            font-weight: 600;
+            font-weight: 900;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
         }
 
@@ -183,7 +183,7 @@
         /* BARRA DE LETRAS - SOLUCIÓN DEFINITIVA */
         .lyrics-container {
             position: fixed;
-            bottom: 50px;
+            bottom: 90px;
             left: 0;
             width: 100%;
             z-index: 100;
@@ -431,7 +431,7 @@
 <body>
     <!-- Video de fondo - DIRECTAMENTE EN EL BODY -->
     <video id="background-video" loop muted>
-        <source src="https://www.dropbox.com/scl/fi/autvri9w9pcordgs2alb1/WhatsApp-Video-2026-01-27-at-9.31.26-PM.mp4?rlkey=6h20onem88eaxhicp51xqogx4&dl=1" type="video/mp4">
+        <source src="https://www.dropbox.com/scl/fi/1ujuoca79bgtqiy8lmxpz/WhatsApp-Video-2026-01-28-at-8.15.45-AM.mp4?rlkey=5nwfq51sa7q9m65z2s2mlfpdh&dl=1" type="video/mp4">
         Tu navegador no soporta videos HTML5.
     </video>
     <div class="overlay"></div>
@@ -440,7 +440,7 @@
     <div class="content">
         <div class="love-message">
             <h1 class="love-line">Cris 👩‍❤️‍💋‍👨</h1>
-            <h2 class="love-line">Te la Dedico (Esta si fue dificil de Programar, No puedo creer que me tengas haciendo estas cosas XD) ❤️</h2>
+            <h2 class="love-line">Para ti ❤️</h2>
         </div>
 
         <!-- Reproductor de música -->
@@ -483,7 +483,7 @@
 
     <!-- Audio -->
     <audio id="loveSong" preload="metadata">
-        <source src="https://www.dropbox.com/scl/fi/autvri9w9pcordgs2alb1/WhatsApp-Video-2026-01-27-at-9.31.26-PM.mp4?rlkey=6h20onem88eaxhicp51xqogx4&st=72b89xsl&dl=1" type="audio/mp4">
+        <source src="https://www.dropbox.com/scl/fi/l5aenkrzboi6zxw9cxskb/WhatsApp-Audio-2026-01-28-at-8.15.57-AM.mpeg?rlkey=5zpdp518wi44iacasjrmlluoa&dl=1" type="audio/mp4">
         Tu navegador no soporta audio HTML5.
     </audio>
 
@@ -510,20 +510,18 @@
             // Letras sincronizadas de la canción
             const lyrics = [
                 {time: 0, text: "🎵🎶 Presiona PLAY para comenzar"},
-                {time: 01, text: "Quizas tan Solo seas Tu"},
-                {time: 03, text: "Quizas tan Solo sea Yo"},
-                {time: 06, text: "Solo hace falta para respirar un segundo"},
-                {time: 08, text: "Sentir que pasan minutos y un sentir en lo profundo"},
-                {time: 11, text: "Que! "},
-                {time: 12, text: "Para de girar mi mundo"},
-                {time: 13, text: "Cuando pienso en que no estamos juntos"},
-                {time: 15, text: "Y siento un dolor oculto y pienso en ti mujer"},
-                {time: 17, text: "Poder perder y no tener poder"},
-                {time: 20, text: "Para volverte a ver saber querer"},
-                {time: 21, text: "Y junto a ti querer envejecer"},
-                {time: 22, text: "Ver como crecen nuestros hijos"},
-                {time: 24, text: "Y al final como amigos"},
-                {time: 26, text: "Nuestra historia un día junto a ellos poder leer"},
+                {time: 02, text: "Estoy aquí a la luz de la vela"},
+                {time: 05, text: "escribiendo una canción a la mujer más bella"},
+                {time: 08, text: "por que quiero que sepa que me enamore de ella"},
+                {time: 11, text: "y la quiero llevar conmigo hasta las estrellas"},
+                {time: 14, text: "Esa cesación que recorre mi cuerpo"},
+                {time: 17, text: "cada vez que me mira si se detiene el tiempo"},
+                {time: 19, text: "cada vez que me besas me robas el aliento"},
+                {time: 24, text: "tu eres la princesa que me devolvió el cuento."},
+                {time: 26, text: "Y quiero confesarte que mi vida eres tú"},
+                {time: 29, text: "el ángel de mi gualda que me entrega su luz,"},
+                {time: 32, text: "la que ilumina el callejón sin salida"},
+                {time: 34, text: "el que le a dado la esperanza a mi vida."},
                 {time: 208, text: "🎵 Fin de la canción 🎶"}
             ];
             
