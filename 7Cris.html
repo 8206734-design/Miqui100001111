@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Cris ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+            position: fixed;
+            width: 100%;
+            background: #000;
+        }
+
+        /* VIDEO COMPLETAMENTE AISLADO */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8) contrast(1.1);
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -9;
+        }
+
+        /* Contenido principal */
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .love-message {
+            margin-bottom: 60px;
+        }
+
+        .love-line {
+            margin-bottom: 15px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s forwards;
+        }
+
+        .love-line:nth-child(1) {
+            font-family: 'Pacifico', cursive;
+            font-size: 4.5rem;
+            color: #ffccd5;
+            letter-spacing: 1px;
+            animation-delay: 0.5s;
+            text-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+        }
+
+        .love-line:nth-child(2) {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2rem;
+            color: #ffb6c1;
+            font-weight: 700;
+            animation-delay: 1s;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.7);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Reproductor de música */
+        .music-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s forwards 1.5s;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .player-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .play-btn {
+            background: rgba(255, 105, 180, 0.9);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 105, 180, 1);
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        .time-display {
+            font-family: 'Montserrat', monospace;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.95);
+            min-width: 40px;
+            font-weight: 600;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            margin: 0 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff69b4, #ffb6c1);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+        }
+
+        .separator {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 3px;
+            font-weight: 300;
+        }
+
+        /* BARRA DE LETRAS - SOLUCIÓN DEFINITIVA */
+        .lyrics-container {
+            position: fixed;
+            bottom: 50px;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+            /* Prevenir cualquier transformación */
+            transform: none !important;
+            will-change: auto;
+        }
+
+        .lyrics-bar {
+            width: 85%;
+            max-width: 700px;
+            background: rgba(20, 20, 30, 0.95); /* Color sólido oscuro */
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            /* TAMAÑO ABSOLUTAMENTE FIJO */
+            height: 110px !important;
+            min-height: 110px !important;
+            max-height: 110px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            /* ELIMINAR TODOS LOS EFECTOS DE TRANSFORMACIÓN */
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+            /* AISLAR COMPLETAMENTE */
+            isolation: isolate;
+            /* FIJAR POSICIÓN */
+            position: relative;
+            z-index: 101;
+            /* ELIMINAR backdrop-filter COMPLETAMENTE */
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .lyrics-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #ffccd5;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            height: 25px;
+            line-height: 25px;
+            /* FIJAR TAMAÑO */
+            flex-shrink: 0;
+        }
+
+        .lyrics-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px !important;
+            min-height: 60px !important;
+            max-height: 60px !important;
+            line-height: 1.3;
+            overflow: hidden;
+            /* SIN TRANSICIONES NI TRANSFORMACIONES */
+            transition: none !important;
+            transform: none !important;
+            animation: none !important;
+            /* FIJAR TAMAÑO */
+            flex-shrink: 0;
+            padding: 0 10px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            text-align: center;
+        }
+
+        /* Corazones animados */
+        .heart {
+            position: fixed;
+            color: rgba(255, 105, 180, 0.8);
+            font-size: 28px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+            filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+        }
+
+        /* Instrucciones */
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Montserrat', sans-serif;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+            z-index: 102;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* RESPONSIVE CON TAMAÑOS FIJOS */
+        @media (max-width: 768px) {
+            .love-line:nth-child(1) {
+                font-size: 3.5rem;
+            }
+            
+            .love-line:nth-child(2) {
+                font-size: 2.5rem;
+            }
+            
+            .player-container {
+                padding: 12px 20px;
+                border-radius: 40px;
+            }
+            
+            .progress-container {
+                margin: 0 15px;
+            }
+            
+            .play-btn {
+                margin: 0 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .lyrics-bar {
+                width: 90%;
+                max-width: 600px;
+                padding: 12px 15px;
+                height: 100px !important;
+                min-height: 100px !important;
+                max-height: 100px !important;
+                bottom: 40px;
+            }
+            
+            .lyrics-title {
+                font-size: 1.1rem;
+                height: 22px;
+                line-height: 22px;
+                margin-bottom: 4px;
+            }
+            
+            .lyrics-text {
+                font-size: 1.4rem;
+                height: 50px !important;
+                min-height: 50px !important;
+                max-height: 50px !important;
+            }
+            
+            .instructions {
+                font-size: 13px;
+                padding: 6px 12px;
+                white-space: normal;
+                text-align: center;
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .love-line:nth-child(1) {
+                font-size: 2.8rem;
+            }
+            
+            .love-line:nth-child(2) {
+                font-size: 2rem;
+            }
+            
+            .time-display {
+                font-size: 14px;
+            }
+            
+            .progress-container {
+                margin: 0 10px;
+            }
+            
+            .play-btn {
+                margin: 0 10px;
+                font-size: 16px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .separator {
+                font-size: 20px;
+                margin: 0 2px;
+            }
+            
+            .lyrics-bar {
+                width: 92%;
+                max-width: 500px;
+                padding: 10px 12px;
+                height: 90px !important;
+                min-height: 90px !important;
+                max-height: 90px !important;
+                bottom: 30px;
+            }
+            
+            .lyrics-title {
+                font-size: 1rem;
+                height: 20px;
+                line-height: 20px;
+                margin-bottom: 2px;
+            }
+            
+            .lyrics-text {
+                font-size: 1.2rem;
+                height: 45px !important;
+                min-height: 45px !important;
+                max-height: 45px !important;
+            }
+            
+            .instructions {
+                font-size: 12px;
+                padding: 5px 10px;
+                bottom: 10px;
+            }
+        }
+
+        /* CLASE DE EMERGENCIA PARA FIJAR TAMAÑO */
+        .force-fixed-size {
+            height: 110px !important;
+            min-height: 110px !important;
+            max-height: 110px !important;
+            width: 85% !important;
+            max-width: 700px !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video de fondo - DIRECTAMENTE EN EL BODY -->
+    <video id="background-video" loop muted>
+        <source src="https://www.dropbox.com/scl/fi/autvri9w9pcordgs2alb1/WhatsApp-Video-2026-01-27-at-9.31.26-PM.mp4?rlkey=6h20onem88eaxhicp51xqogx4&dl=1" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+    <div class="overlay"></div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <div class="love-message">
+            <h1 class="love-line">Cris 👩‍❤️‍💋‍👨</h1>
+            <h2 class="love-line">Te la Dedico (Esta si fue dificil de Programar, No puedo creer que me tengas haciendo estas cosas XD) ❤️</h2>
+        </div>
+
+        <!-- Reproductor de música -->
+        <div class="music-player" id="musicPlayer">
+            <div class="player-container">
+                <span class="time-display" id="currentTime">0:00</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <button class="play-btn" id="playBtn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="separator">-</span>
+                <span class="time-display" id="duration">0:00</span>
+            </div>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de letras - ESTRUCTURA SIMPLIFICADA -->
+    <div class="lyrics-container" id="lyricsContainer">
+        <div class="lyrics-bar force-fixed-size" id="lyricsBar">
+            <div class="lyrics-title">CRIS ARMAS</div>
+            <div class="lyrics-text" id="lyricsText">🎵🎶 Presiona PLAY para comenzar</div>
+        </div>
+    </div>
+
+    <!-- Instrucciones -->
+    <div class="instructions">
+        Haz clic en <i class="fas fa-play" style="margin: 0 5px;"></i> para comenzar la música
+    </div>
+
+    <!-- Audio -->
+    <audio id="loveSong" preload="metadata">
+        <source src="https://www.dropbox.com/scl/fi/autvri9w9pcordgs2alb1/WhatsApp-Video-2026-01-27-at-9.31.26-PM.mp4?rlkey=6h20onem88eaxhicp51xqogx4&st=72b89xsl&dl=1" type="audio/mp4">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos DOM
+            const video = document.getElementById('background-video');
+            const audio = document.getElementById('loveSong');
+            const playBtn = document.getElementById('playBtn');
+            const playIcon = playBtn.querySelector('i');
+            const lyricsText = document.getElementById('lyricsText');
+            const lyricsBar = document.getElementById('lyricsBar');
+            const lyricsContainer = document.getElementById('lyricsContainer');
+            const currentTimeEl = document.getElementById('currentTime');
+            const durationEl = document.getElementById('duration');
+            const progressBar = document.getElementById('progressBar');
+            const progressContainer = document.getElementById('progressContainer');
+            
+            // Variables de estado
+            let isPlaying = false;
+            let heartsInterval;
+            let videoStarted = false;
+            
+            // Letras sincronizadas de la canción
+            const lyrics = [
+                {time: 0, text: "🎵🎶 Presiona PLAY para comenzar"},
+                {time: 01, text: "Quizas tan Solo seas Tu"},
+                {time: 03, text: "Quizas tan Solo sea Yo"},
+                {time: 06, text: "Solo hace falta para respirar un segundo"},
+                {time: 08, text: "Sentir que pasan minutos y un sentir en lo profundo"},
+                {time: 11, text: "Que! "},
+                {time: 12, text: "Para de girar mi mundo"},
+                {time: 13, text: "Cuando pienso en que no estamos juntos"},
+                {time: 15, text: "Y siento un dolor oculto y pienso en ti mujer"},
+                {time: 17, text: "Poder perder y no tener poder"},
+                {time: 20, text: "Para volverte a ver saber querer"},
+                {time: 21, text: "Y junto a ti querer envejecer"},
+                {time: 22, text: "Ver como crecen nuestros hijos"},
+                {time: 24, text: "Y al final como amigos"},
+                {time: 26, text: "Nuestra historia un día junto a ellos poder leer"},
+                {time: 208, text: "🎵 Fin de la canción 🎶"}
+            ];
+            
+            // Configurar video en mute y PAUSADO al inicio
+            video.muted = true;
+            video.pause();
+            video.currentTime = 0;
+            
+            // FUNCIÓN CRÍTICA: Forzar tamaño CONSTANTE
+            function forceFixedSize() {
+                // Aplicar estilos en línea para anular cualquier cosa
+                lyricsBar.style.cssText = `
+                    height: 110px !important;
+                    min-height: 110px !important;
+                    max-height: 110px !important;
+                    width: 85% !important;
+                    max-width: 700px !important;
+                    transform: none !important;
+                    transition: none !important;
+                    animation: none !important;
+                    position: relative !important;
+                    z-index: 101 !important;
+                    overflow: hidden !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    justify-content: center !important;
+                `;
+                
+                lyricsText.style.cssText = `
+                    height: 60px !important;
+                    min-height: 60px !important;
+                    max-height: 60px !important;
+                    transform: none !important;
+                    transition: none !important;
+                    animation: none !important;
+                    overflow: hidden !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                `;
+                
+                lyricsContainer.style.cssText = `
+                    position: fixed !important;
+                    bottom: 50px !important;
+                    left: 0 !important;
+                    width: 100% !important;
+                    z-index: 100 !important;
+                    display: flex !important;
+                    justify-content: center !important;
+                    pointer-events: none !important;
+                    transform: none !important;
+                `;
+                
+                // Para dispositivos móviles
+                if (window.innerWidth <= 768) {
+                    lyricsBar.style.height = '100px !important';
+                    lyricsBar.style.minHeight = '100px !important';
+                    lyricsBar.style.maxHeight = '100px !important';
+                    lyricsText.style.height = '50px !important';
+                    lyricsText.style.minHeight = '50px !important';
+                    lyricsText.style.maxHeight = '50px !important';
+                }
+                
+                if (window.innerWidth <= 480) {
+                    lyricsBar.style.height = '90px !important';
+                    lyricsBar.style.minHeight = '90px !important';
+                    lyricsBar.style.maxHeight = '90px !important';
+                    lyricsText.style.height = '45px !important';
+                    lyricsText.style.minHeight = '45px !important';
+                    lyricsText.style.maxHeight = '45px !important';
+                }
+            }
+            
+            // Ejecutar inmediatamente y cada 100ms para asegurar
+            forceFixedSize();
+            const sizeChecker = setInterval(forceFixedSize, 100);
+            
+            // Establecer duración del audio
+            audio.addEventListener('loadedmetadata', function() {
+                const duration = audio.duration;
+                const minutes = Math.floor(duration / 60);
+                const seconds = Math.floor(duration % 60);
+                durationEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            });
+            
+            // Actualizar tiempo actual y barra de progreso
+            audio.addEventListener('timeupdate', function() {
+                const currentTime = audio.currentTime;
+                const duration = audio.duration;
+                
+                // Actualizar tiempo actual
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = Math.floor(currentTime % 60);
+                currentTimeEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Actualizar barra de progreso
+                const progressPercent = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Actualizar letra según el tiempo
+                updateLyrics(currentTime);
+            });
+            
+            // Cuando termina la canción
+            audio.addEventListener('ended', function() {
+                playIcon.className = 'fas fa-play';
+                isPlaying = false;
+                stopHearts();
+                video.pause();
+                video.currentTime = 0;
+            });
+            
+            // Actualizar letras - SIN EFECTOS
+            function updateLyrics(currentTime) {
+                let currentLyric = lyrics[0].text;
+                
+                // Buscar la letra correspondiente al tiempo actual
+                for (let i = lyrics.length - 1; i >= 0; i--) {
+                    if (currentTime >= lyrics[i].time) {
+                        currentLyric = lyrics[i].text;
+                        break;
+                    }
+                }
+                
+                // Solo actualizar si la letra cambió
+                if (lyricsText.textContent !== currentLyric) {
+                    // Actualización DIRECTA, sin transiciones
+                    lyricsText.textContent = currentLyric;
+                    
+                    // Forzar tamaño inmediatamente después de actualizar
+                    setTimeout(forceFixedSize, 10);
+                }
+            }
+            
+            // Controlar reproducción
+            playBtn.addEventListener('click', function() {
+                if (!isPlaying) {
+                    // Primero pausar todo
+                    audio.pause();
+                    video.pause();
+                    
+                    // Resetear tiempos
+                    audio.currentTime = 0;
+                    video.currentTime = 0;
+                    
+                    // Pequeña pausa para sincronización
+                    setTimeout(() => {
+                        // Iniciar reproducción
+                        const playPromise = audio.play();
+                        const videoPromise = video.play();
+                        
+                        if (playPromise !== undefined && videoPromise !== undefined) {
+                            Promise.all([playPromise, videoPromise]).then(() => {
+                                playIcon.className = 'fas fa-pause';
+                                isPlaying = true;
+                                startHearts();
+                                videoStarted = true;
+                            }).catch(error => {
+                                console.log("Error al reproducir:", error);
+                                audio.play().then(() => {
+                                    playIcon.className = 'fas fa-pause';
+                                    isPlaying = true;
+                                    startHearts();
+                                });
+                            });
+                        }
+                    }, 100);
+                    
+                } else {
+                    // Pausar reproducción
+                    audio.pause();
+                    video.pause();
+                    playIcon.className = 'fas fa-play';
+                    
+                    // Detener corazones
+                    stopHearts();
+                    
+                    isPlaying = false;
+                }
+                
+                // Forzar tamaño después de cualquier click
+                setTimeout(forceFixedSize, 50);
+            });
+            
+            // Controlar la barra de progreso
+            function setProgress(e) {
+                const width = this.clientWidth;
+                const clickX = e.offsetX;
+                const duration = audio.duration;
+                
+                const newTime = (clickX / width) * duration;
+                audio.currentTime = newTime;
+                
+                if (isPlaying && videoStarted) {
+                    video.currentTime = newTime;
+                }
+            }
+            
+            progressContainer.addEventListener('click', setProgress);
+            
+            // Crear corazones animados
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                
+                const startX = Math.random() * window.innerWidth;
+                heart.style.left = startX + 'px';
+                heart.style.bottom = '-40px';
+                
+                document.body.appendChild(heart);
+                
+                const animationDuration = 12 + Math.random() * 8;
+                const horizontalMovement = (Math.random() - 0.5) * 80;
+                
+                let startTime = null;
+                
+                function animateHeart(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const progress = (timestamp - startTime) / (animationDuration * 1000);
+                    
+                    if (progress < 1) {
+                        heart.style.opacity = 0.8 * (1 - progress);
+                        heart.style.bottom = `calc(${-40 + (window.innerHeight + 40) * progress}px)`;
+                        heart.style.left = `${startX + horizontalMovement * progress}px`;
+                        heart.style.transform = `scale(${1 + 0.3 * progress}) rotate(${15 * progress}deg)`;
+                        requestAnimationFrame(animateHeart);
+                    } else {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animateHeart);
+            }
+            
+            // Iniciar generación de corazones
+            function startHearts() {
+                heartsInterval = setInterval(() => {
+                    createHeart();
+                }, 2000 + Math.random() * 2000);
+                
+                for (let i = 0; i < 2; i++) {
+                    setTimeout(() => createHeart(), i * 1000);
+                }
+            }
+            
+            // Detener generación de corazones
+            function stopHearts() {
+                clearInterval(heartsInterval);
+            }
+            
+            // Inicializar
+            lyricsText.textContent = lyrics[0].text;
+            video.load();
+            
+            // Forzar tamaño constantemente
+            window.addEventListener('resize', forceFixedSize);
+            
+            // Detener el checker cuando la página se cierre
+            window.addEventListener('beforeunload', function() {
+                clearInterval(sizeChecker);
+            });
+        });
+    </script>
+</body>
+</html>
